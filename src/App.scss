@@ -1,0 +1,15 @@
+@import "./Config.scss";
+
+body {
+  margin: 0;
+  font-family: "Source Sans Pro", sans-serif;
+  font-size: 14px;
+  line-height: 1.3em;
+}
+
+.trello {
+  height: 100vh; //vh: chiều cao ăn 100% full màn hình
+  display: grid;
+  grid-template-rows: 40px 50px 1fr;
+  background-color: $board-bg-color;
+}
