@@ -3,16 +3,17 @@ import "./Card.scss"
 
 function Card({ card }) {
   return (
-    <li className="card-item">
+    <div className="card-item">
       {card.cover && (
         <img
           src={card.cover}
           className="card-cover"
-          alt=""
+          alt="cover-img"
+          onMouseDown={e => e.preventDefault()}
         />
       )}
       {card.title}
-    </li>
+    </div>
   )
 }
 
