@@ -31,14 +31,16 @@ export const initialData = {
               boardId: "board-2",
               columnId: "column-2",
               title: "Title od card 2",
-              cover: null,
+              cover:
+                "https://firebasestorage.googleapis.com/v0/b/hostelmanagement-ae202.appspot.com/o/Avatar%2F000041.JPG?alt=media&token=4c9b1e96-b765-4265-9930-a4540a1b8230",
             },
             {
               id: "card-3",
               boardId: "board-3",
               columnId: "column-3",
               title: "Title od card 3",
-              cover: null,
+              cover:
+                "https://firebasestorage.googleapis.com/v0/b/hostelmanagement-ae202.appspot.com/o/Avatar%2F000041.JPG?alt=media&token=4c9b1e96-b765-4265-9930-a4540a1b8230",
             },
             {
               id: "card-4",
