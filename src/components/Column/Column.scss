@@ -2,13 +2,12 @@
 
 .column {
   flex: 0 0 auto;
-  width: 300px;
+  width: $column-width;
   height: $column-height;
   margin-left: $gap;
 
   > * {
     background-color: $list-bg-color;
-    color: #333;
     padding: 0 8px;
   }
 
@@ -31,6 +30,16 @@
     font-weight: bold;
     border-bottom-left-radius: $column-border-radius;
     border-bottom-right-radius: $column-border-radius;
+    color: #888;
+
+    .footer-action {
+      margin-left: $gap;
+      cursor: pointer;
+
+      &:hover {
+        color: $app-main-text-color;
+      }
+    }
   }
 
   .card-list {
@@ -56,11 +65,13 @@
     .card-ghost {
       transition: transform 0.18s ease;
       transform: rotateZ(5deg);
+      font-weight: bold;
     }
 
     .card-ghost-drop {
       transition: transform 0.18s ease-in-out;
       transform: rotateZ(0deg);
+      font-weight: bold;
     }
 
     .card-drop-preview {

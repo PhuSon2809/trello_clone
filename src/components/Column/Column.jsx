@@ -4,12 +4,8 @@ import { mapOrder } from "../../utilities/sorts";
 import Card from "../Card/Card";
 import "./Column.scss";
 
-function Column({ column }) {
+function Column({ column, onCardDrop }) {
   const cards = mapOrder(column.cards, column.cardOrder, "id");
-
-  const onCardDrop = (dropResult) => {
-    console.log(dropResult);
-  };
 
   return (
     <div className="column">
@@ -18,7 +14,7 @@ function Column({ column }) {
         <Container
           orientation="vertical" // default xếp theo cột
           groupName="ps-col" //Có thể kéo thả các card thông qua các cột có chung groupName
-          onDrop={(e) => onCardDrop(column.id, e)}
+          onDrop={(dropResult) => onCardDrop(column.id, dropResult)}
           getChildPayload={(index) => cards[index]}
           dragClass="card-ghost"
           dropClass="card-ghost-drop"
@@ -36,7 +32,12 @@ function Column({ column }) {
           ))}
         </Container>
       </div>
-      <footer>Add another cart</footer>
+      <footer>
+        <div className="footer-action">
+          <i className="fa fa-plus icon" />
+          Add another cart
+        </div>
+      </footer>
     </div>
   );
 }
