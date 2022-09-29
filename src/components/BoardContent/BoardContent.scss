@@ -6,6 +6,10 @@
   // margin: 0 $gap $gap;
   overflow-x: auto;
   overflow-y: hidden;
+  &::after {
+    content: "";
+    flex: 0 0 8px;
+  }
 
   &::-webkit-scrollbar {
     -webkit-appearance: none;
@@ -29,7 +33,7 @@
 
   .add-new-column {
     width: $column-width;
-    height: 32px;
+    max-width: $column-width;
     line-height: 32px;
     padding: 4px 0 4px 15px;
     cursor: pointer;
@@ -39,9 +43,41 @@
     background-color: hsla(0, 0%, 100%, 0.24);
     border-radius: $column-border-radius;
 
-    &:hover{
-    background-color: hsla(0, 0%, 100%, 0.34);
+    &:hover {
+      background-color: hsla(0, 0%, 100%, 0.34);
+    }
+  }
 
+  .enter-new-column {
+    width: $column-width;
+    max-width: $column-width;
+    background-color: $column-bg-color;
+    line-height: 32px;
+    padding: 4px;
+    margin-left: $gap;
+    border-radius: $column-border-radius;
+    outline: none;
+
+    .input-enter-new-column {
+      margin: 0 0 3px 0;
+    }
+
+    .button {
+      display: flex;
+      align-items: center;
+
+      .cancel-new-column {
+        margin-left: $gap;
+        cursor: pointer;
+
+        i {
+          font-size: 18px;
+          color: $alert-danger;
+          &:hover {
+            color: darken($alert-danger, 10);
+          }
+        }
+      }
     }
   }
 }
