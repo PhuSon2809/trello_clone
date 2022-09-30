@@ -1,5 +1,5 @@
 import { isEmpty } from "lodash";
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   Button,
   Col,
@@ -107,6 +107,36 @@ function BoardContent() {
     toggleNewColumnFrom();
   };
 
+  const onUpdateColumn = (newColumnToUpdate) => {
+    console.log(newColumnToUpdate);
+    const columnIdToUpdate = newColumnToUpdate.id;
+
+    let newColumns = [...columns];
+
+    const columnIndexToUpdate = newColumns.findIndex(
+      (column) => column.id === columnIdToUpdate
+    );
+
+    if (newColumnToUpdate._destroy) {
+      // remove column
+      newColumns.splice(columnIndexToUpdate, 1);
+    } else {
+      //update column index
+      //vị trí 1: xóa phần tử tại index đóa
+      //vị trí 2: xóa bao nhiêu phần tử (1 --> là 1 phần tử )
+      //vị trí 3: thêm phần tử mới vào vị trí đã xóa từ index 
+      // ---> Quá trình update
+      newColumns.splice(columnIndexToUpdate, 1, newColumnToUpdate);
+    }
+
+    let newBoard = { ...board };
+    newBoard.columnOrder = newColumns.map((column) => column.id);
+    newBoard.columns = newColumns;
+
+    setColumns(newColumns);
+    setBoard(newBoard);
+  };
+
   const handleChangeInput = (e) => {
     setNewColumntitle(e.target.value);
   };
@@ -126,7 +156,11 @@ function BoardContent() {
       >
         {columns.map((column, index) => (
           <Draggable key={index}>
-            <Column column={column} onCardDrop={onCardDrop} />
+            <Column
+              column={column}
+              onCardDrop={onCardDrop}
+              onUpdateColumn={onUpdateColumn}
+            />
           </Draggable>
         ))}
       </Container>

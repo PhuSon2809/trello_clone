@@ -12,7 +12,7 @@
   }
 
   header {
-    padding-left: 15px;
+    padding: 0 8px;
     height: $column-header-height;
     line-height: $column-header-height;
     font-size: 16px;
@@ -20,6 +20,74 @@
     border-top-left-radius: $column-border-radius;
     border-top-right-radius: $column-border-radius;
     cursor: pointer;
+    display: flex;
+    align-items: center;
+
+    .column-tilte {
+      flex: 1;
+
+
+    }
+
+    .column-dropdown-actions {
+      .dropdown-btn {
+        color: $app-main-text-color;
+        background: transparent;
+        border: none;
+        outline: none;
+        font-size: 1.3rem;
+        font-weight: bold;
+        padding: 5px 6.5px 10px 6.5px;
+        line-height: $gap;
+        margin-bottom: 3px;
+        margin-left: 1px;
+
+        &::after {
+          content: "...";
+          border: none;
+          outline: none;
+        }
+
+        &:hover {
+          background-color: darken($column-bg-color, 5);
+        }
+        &:active {
+          background-color: darken($column-bg-color, 10);
+        }
+      }
+
+      .dropdown-menu {
+        padding: 0 $gap $gap $gap;
+        min-width: 285px;
+
+        .dropdown-title {
+          color: #888 !important;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          padding: $gap 0 0 0 !important;
+
+          &:hover {
+            background: transparent;
+          }
+
+          i {
+            &:hover {
+              cursor: pointer;
+            }
+          }
+        }
+
+        a.dropdown-item {
+          cursor: pointer;
+          color: $app-main-text-color;
+          font-weight: 400;
+          padding: 6px 12px;
+          line-height: 20px;
+          font-size: 16px;
+        }
+      }
+    }
   }
 
   footer {
