@@ -1,5 +1,6 @@
-import React, { useCallback, useEffect, useState } from "react";
-import { Dropdown, Form } from "react-bootstrap";
+import { cloneDeep } from "lodash";
+import React, { useEffect, useRef, useState } from "react";
+import { Button, Dropdown, Form } from "react-bootstrap";
 import { Container, Draggable } from "react-smooth-dnd";
 import { MODAL_ACTION_CONFIRM } from "../../utilities/constants";
 import {
@@ -16,14 +17,33 @@ function Column({ column, onCardDrop, onUpdateColumn }) {
   const [show, setShow] = useState(false);
   const [columnTitle, setColumnTitle] = useState("");
 
+  const [onpenNewCardFrom, setOnpenNewCardFrom] = useState(false);
+  const toggleNewCardFrom = () => {
+    setOnpenNewCardFrom(!onpenNewCardFrom);
+  };
+
+  const cardRef = useRef(null);
+
+  const [newCardTitle, setNewCardtitle] = useState("");
+  const handleChangeInput = (e) => {
+    setNewCardtitle(e.target.value);
+  };
+
   useEffect(() => {
     setColumnTitle(column.title);
     console.log(column.title);
   }, [column.title]);
 
-  const handleColumnTitleChange = useCallback((e) => {
+  const handleColumnTitleChange = (e) => {
     setColumnTitle(e.target.value);
-  }, []);
+  };
+
+  useEffect(() => {
+    if (cardRef && cardRef.current) {
+      cardRef.current.focus();
+      cardRef.current.select();
+    }
+  }, [onpenNewCardFrom]);
 
   const handleColumnTitleBlur = () => {
     const newColumn = {
@@ -44,6 +64,29 @@ function Column({ column, onCardDrop, onUpdateColumn }) {
       onUpdateColumn(newColumn);
     }
     toggleShowModal();
+  };
+
+  const addNewCard = () => {
+    if (!newCardTitle) {
+      cardRef.current.focus();
+      return;
+    }
+
+    const newCardToAdd = {
+      id: Math.random().toString(36).substring(2, 5),
+      boardId: column.boardId,
+      columnId: column.id,
+      title: newCardTitle.trim(),
+      cover: null,
+    };
+
+    let newColumn = cloneDeep(column);
+    newColumn.cards.push(newCardToAdd);
+    newColumn.cardOrder.push(newCardToAdd.id);
+
+    onUpdateColumn(newColumn);
+    setNewCardtitle("");
+    toggleNewCardFrom();
   };
 
   return (
@@ -79,7 +122,7 @@ function Column({ column, onCardDrop, onUpdateColumn }) {
               </Dropdown.Item>
 
               <Dropdown.Divider />
-              <Dropdown.Item>Add Crad...</Dropdown.Item>
+              <Dropdown.Item onClick={toggleNewCardFrom}>Add Crad...</Dropdown.Item>
               <Dropdown.Item>Copy List...</Dropdown.Item>
               <Dropdown.Item onClick={toggleShowModal}>
                 Remove List...
@@ -118,12 +161,41 @@ function Column({ column, onCardDrop, onUpdateColumn }) {
             </Draggable>
           ))}
         </Container>
+        {onpenNewCardFrom && (
+          <div className="add-new-card-area">
+            <Form.Control
+              ref={cardRef}
+              value={newCardTitle}
+              onChange={handleChangeInput}
+              onKeyDown={(e) => e.key === "Enter" && addNewCard()}
+              className="textarea-enter-new-card"
+              size="sm"
+              as="textarea"
+              row="3"
+              placeholder="Enter a title for this card"
+            />
+          </div>
+        )}
       </div>
       <footer>
-        <div className="footer-action">
-          <i className="fa fa-plus icon" />
-          Add another cart
-        </div>
+        {onpenNewCardFrom && (
+          <div className="add-new-card-action">
+            <div className="button">
+              <Button size="sm" variant="success" onClick={addNewCard}>
+                Add card
+              </Button>
+              <span className="cancel-icon" onClick={toggleNewCardFrom}>
+                <i className="fa fa-times icon" />
+              </span>
+            </div>
+          </div>
+        )}
+        {!onpenNewCardFrom && (
+          <div className="footer-action" onClick={toggleNewCardFrom}>
+            <i className="fa fa-plus icon" />
+            Add another cart
+          </div>
+        )}
       </footer>
 
       <ConfirmModal
