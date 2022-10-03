@@ -18,6 +18,10 @@ function BoardContent() {
   const [board, setBoard] = useState({});
   const [columns, setColumns] = useState([]);
   const [onpenNewColumnFrom, setOnpenNewColumnFrom] = useState(false);
+  const toggleNewColumnFrom = () => {
+    setOnpenNewColumnFrom(!onpenNewColumnFrom);
+  };
+
   const [newColumnTitle, setNewColumntitle] = useState("");
 
   const inputTitleColumnRef = useRef(null);
@@ -75,10 +79,6 @@ function BoardContent() {
     }
   };
 
-  const toggleNewColumnFrom = () => {
-    setOnpenNewColumnFrom(!onpenNewColumnFrom);
-  };
-
   const addNewColumn = () => {
     if (!newColumnTitle) {
       inputTitleColumnRef.current.focus();
@@ -124,7 +124,7 @@ function BoardContent() {
       //update column index
       //vị trí 1: xóa phần tử tại index đóa
       //vị trí 2: xóa bao nhiêu phần tử (1 --> là 1 phần tử )
-      //vị trí 3: thêm phần tử mới vào vị trí đã xóa từ index 
+      //vị trí 3: thêm phần tử mới vào vị trí đã xóa từ index
       // ---> Quá trình update
       newColumns.splice(columnIndexToUpdate, 1, newColumnToUpdate);
     }
@@ -190,10 +190,7 @@ function BoardContent() {
                 <Button size="sm" variant="success" onClick={addNewColumn}>
                   Add column
                 </Button>
-                <span
-                  className="cancel-new-column"
-                  onClick={toggleNewColumnFrom}
-                >
+                <span className="cancel-icon" onClick={toggleNewColumnFrom}>
                   <i className="fa fa-times icon" />
                 </span>
               </div>

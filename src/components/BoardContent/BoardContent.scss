@@ -60,28 +60,11 @@
 
     .input-enter-new-column {
       margin: 0 0 3px 0;
-
-      &:focus{
-        border: 1px solid $input-border-color;
-      }
     }
 
     .button {
       display: flex;
       align-items: center;
-
-      .cancel-new-column {
-        margin-left: $gap;
-        cursor: pointer;
-
-        i {
-          font-size: 18px;
-          color: $alert-danger;
-          &:hover {
-            color: darken($alert-danger, 10);
-          }
-        }
-      }
     }
   }
 }
